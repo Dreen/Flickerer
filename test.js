@@ -17,14 +17,16 @@ describe('Flickerer', function()
 	{
 		it('testing go() with test.echo - should return input', function(done)
 		{
-			var fl = new Flickerer(el),
-			data = {
-				'foo': 'bar'
-			};
+			var fl = new Flickerer(el);
 
-			fl.go('flickr.test.echo', data)(function(ret)
+			fl.go('flickr.test.echo', {
+				'foo': 'bar'
+			})(function(ret)
 			{
-				assert.deepEqual(ret, data);
+				console.log(ret);
+				assert.deepEqual(ret, {
+					'foo': {"_content": "bar"}
+				});
 				done();
 			});
 		});
