@@ -29,5 +29,19 @@ describe('Flickerer', function()
 				done();
 			});
 		});
+
+		describe('Search', function()
+		{
+			it('empty query - should return 100 photos', function(done)
+			{
+				var fl = new Flickerer(el);
+
+				fl.search({}, function(ret)
+				{
+					assert.equal(ret.photos.photo.length, 100);
+					done();
+				});
+			});
+		});
 	});
 });
