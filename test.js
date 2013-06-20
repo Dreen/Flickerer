@@ -23,7 +23,6 @@ describe('Flickerer', function()
 				'foo': 'bar'
 			})(function(ret)
 			{
-				console.log(ret);
 				assert.deepEqual(ret, {
 					'foo': {"_content": "bar"}
 				});

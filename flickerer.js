@@ -6,7 +6,8 @@ var Flickerer = (function($)
 	baseReq	= {
 		'format': 'json',
 		'api_key': apiKey,
-		'nojsoncallback': 1
+		'nojsoncallback': 1,
+		'method': ''
 	};
 
 	function say(msg)
@@ -38,8 +39,20 @@ var Flickerer = (function($)
 		{
 			$.post(baseURL, data, function(ret)
 			{
-				// TODO: remove base params
-				onFinish(ret);
+				for (baseParam in baseReq)
+				{
+					delete ret[baseParam];
+				}
+
+				if (ret.stat == 'ok')
+				{
+					delete ret.stat;
+					onFinish(ret);
+				}
+				else
+				{
+					say('Error processing request: ' + ret.message);
+				}
 			});
 		};
 	};
