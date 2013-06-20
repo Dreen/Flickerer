@@ -2,8 +2,16 @@
 <head>
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.1.js"></script>
 <script type="text/javascript" src="flickerer.js"></script>
+<link rel="stylesheet" type="text/css" href="flickerer.css" />
+<script>
+var fl;
+$(function()
+{
+	fl = new Flickerer($('#flwnd'));
+});
+</script>
 </head>
 <body>
-
+<div id="flwnd"></div>
 </body>
 </html>
