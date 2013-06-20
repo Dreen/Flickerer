@@ -32,11 +32,11 @@ describe('Flickerer', function()
 
 		describe('Search', function()
 		{
-			it('empty query - should return 100 photos', function(done)
+			it('generic text query - should return 100 results', function(done)
 			{
 				var fl = new Flickerer(el);
 
-				fl.search({}, function(ret)
+				fl.search({'text':'a'}, function(ret)
 				{
 					assert.equal(ret.photos.total, '100');
 					done();

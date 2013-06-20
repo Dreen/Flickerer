@@ -45,7 +45,10 @@ var Flickerer = (function($)
 	 */
 	F.prototype.search = function(params, onFinish)
 	{
-		this.go('flickr.photos.search', params).call(this, onFinish);
+		if (typeof params != "object" || Object.keys(params).length === 0)
+			say('Error: Empty search query.');
+		else
+			this.go('flickr.photos.search', params).call(this, onFinish);
 	};
 
 	/*
@@ -56,7 +59,6 @@ var Flickerer = (function($)
 		data = $.extend(data || {}, baseReq, {
 			'method': methodName
 		});
-
 		return function(onFinish)
 		{
 			$.post(baseURL, data, function(ret)
@@ -74,6 +76,7 @@ var Flickerer = (function($)
 				}
 				else
 				{
+					console.log('%j', ret);
 					say('Error processing request: ' + ret.message);
 				}
 			});
