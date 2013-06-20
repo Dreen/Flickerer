@@ -29,10 +29,15 @@ var Flickerer = (function($)
 	/*
 	 * Constructor
 	 */
-	function F(el)
+	function F(el, rows, columns)
 	{
-		this.$el = el;
+		rows = rows || 5;
+		columns = columns || 10;
 
+		if (!el)
+			say('Error initialising: No root element given');
+		else
+			this.$el = el;
 	}
 
 	/*
