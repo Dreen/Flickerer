@@ -35,6 +35,8 @@ var Flickerer = (function($)
 			'method': methodName
 		});
 
+		var mirror = this;
+
 		return function(onFinish)
 		{
 			$.post(baseURL, data, function(ret)
@@ -47,7 +49,7 @@ var Flickerer = (function($)
 				if (ret.stat == 'ok')
 				{
 					delete ret.stat;
-					onFinish(ret);
+					onFinish.call(mirror, ret);
 				}
 				else
 				{
