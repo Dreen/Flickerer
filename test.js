@@ -38,7 +38,22 @@ describe('Flickerer', function()
 
 				fl.search({}, function(ret)
 				{
-					assert.equal(ret.photos.photo.length, 100);
+					assert.equal(ret.photos.total, '100');
+					done();
+				});
+			});
+
+			it('specific query - should only return 1 photo', function(done)
+			{
+				var fl = new Flickerer(el);
+
+				fl.search({
+					'user_id': '97740566@N04',
+					'text': 'DSCN9791'
+				}, function(ret)
+				{
+					assert.equal(ret.photos.total, '1');
+					assert.equal(ret.photos.photo[0].id, '9085891029');
 					done();
 				});
 			});
