@@ -32,8 +32,16 @@ var Flickerer = (function($)
 	function F(el)
 	{
 		this.$el = el;
-		//this.$el.append($('<'));
+
 	}
+
+	/*
+	 * Run a search query
+	 */
+	F.prototype.search = function(params, onFinish)
+	{
+		this.go('flickr.photos.search', params).call(this, onFinish);
+	};
 
 	/*
 	 * Return a worker for an API call
@@ -43,8 +51,6 @@ var Flickerer = (function($)
 		data = $.extend(data || {}, baseReq, {
 			'method': methodName
 		});
-
-		var mirror = this;
 
 		return function(onFinish)
 		{
@@ -59,7 +65,7 @@ var Flickerer = (function($)
 				if (ret.stat == 'ok')
 				{
 					delete ret.stat;
-					onFinish.call(mirror, ret);
+					onFinish.call(this, ret);
 				}
 				else
 				{
