@@ -1,15 +1,18 @@
 var Flickerer = (function($)
 {
 	var
-	baseURL	= 'http://api.flickr.com/services/rest/',	
-	apiKey	= 'c5d85dc681e1d7c60f1f3289b5e03396',
-	baseReq	= {
+	baseURL	= 'http://api.flickr.com/services/rest/',	// url for all API requests
+	apiKey	= 'c5d85dc681e1d7c60f1f3289b5e03396',		// required API key
+	baseReq	= {											// values sent with every request
 		'format': 'json',
 		'api_key': apiKey,
 		'nojsoncallback': 1,
 		'method': ''
 	};
 
+	/*
+	 * Display a message box
+	 */
 	function say(msg)
 	{
 		$msgbox = $('<div class="msgbox"><a class="cls" href="#">X</a><br />' + msg + '</div>');
@@ -20,6 +23,12 @@ var Flickerer = (function($)
 		$msgbox.appendTo('body');
 	}
 
+
+
+
+	/*
+	 * Constructor
+	 */
 	function F(el)
 	{
 		this.$el = el;
@@ -41,6 +50,7 @@ var Flickerer = (function($)
 		{
 			$.post(baseURL, data, function(ret)
 			{
+				// before using the callback, remove all the meta-data from the response
 				for (baseParam in baseReq)
 				{
 					delete ret[baseParam];
@@ -59,6 +69,9 @@ var Flickerer = (function($)
 		};
 	};
 
+	/*
+	 * Display software info
+	 */
 	F.prototype.about = function()
 	{
 		say('Created by Greg Balaga &lt;<a href="mailto:greg.balaga@gmail.com">greg.balaga@gmail.com</a>&gt;<br />' +
