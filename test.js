@@ -3,7 +3,30 @@ assert	= require('assert'),
 file	= require('fs').readFileSync,
 jQuery	= require('jquery').create();
 
-//
-eval(file('./path/to/file.js', 'utf8'));
+// load the global flickerer object, check if its defined
+eval(file('./flickerer.js', 'utf8'));
+if (!Flickerer)
+	process.exit(1);
 
-console.log(Flickerer);
+// fake element
+var el = jQuery('document');
+
+describe('Flickerer', function()
+{
+	describe('Flickr API', function()
+	{
+		it('testing go() with test.echo - should return input', function(done)
+		{
+			var fl = new Flickerer(el),
+			data = {
+				'foo': 'bar'
+			};
+
+			fl.go('flickr.test.echo', data)(function(ret)
+			{
+				assert.deepEqual(ret, data);
+				done();
+			});
+		});
+	});
+});
