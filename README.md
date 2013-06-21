@@ -9,3 +9,4 @@ Files:
  - `flickerer.js`: The module.
  - `flickerer.css`: Example styling.
  - `example.html`: Example usage.
+ - `node_modules/`: Directory containing modules needed by NodeJS to run the test
