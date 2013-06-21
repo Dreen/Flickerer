@@ -51,13 +51,21 @@ var Flickerer = (function($)
         '<button>Search</button>' +
     	'</div><div class="result box">' +
         '<div class="pagination"></div>' +
+        '<div class="images"></div>' +
         '</div>');
         var mirror = this;
 
         // draw photo results
         function searchLoadResults(res)
         {
-        	// TODO
+        	var $res = $queryUI.find('.images').empty(),
+        	item;
+        	for (var i=0; i<res.photos.perpage; i++)
+        	{
+        		item = res.photos.photo[i];
+        		$res.append($('<img src="http://farm'+item.farm+'.staticflickr.com/'+
+        						item.server+'/'+item.id+'_'+item.secret+'_s.jpg" />'));
+        	}
         }
         // determine pagination
         function searchRebuildPagination(res, full)
