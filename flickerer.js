@@ -35,9 +35,30 @@ var Flickerer = (function($)
 		columns = columns || 10;
 
 		if (!el)
+		{
 			say('Error initialising: No root element given');
+			return;
+		}
 		else
 			this.$el = el;
+
+		// set up interface
+		var $queryUI = $('<div class="query box">' +
+        '<label>Title:</label><input type="text" id="query_text" /><br />' +
+        '<label>Tags (use comma):</label><input type="text" id="query_tags" /><br />' +
+        '<button>Search</button>' +
+    	'</div><div class="result box">' +
+        '<div class="pagination"></div>' +
+        '</div>');
+		$queryUI.find('button').click(function()
+		{
+			var query = {
+				'text': $queryUI.find('#query_text').val(),
+				'tags': $queryUI.find('#query_tags').val().split(',')
+			};
+			console.log(query);
+		});
+		$queryUI.appendTo(this.$el);
 	}
 
 	/*
