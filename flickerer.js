@@ -52,20 +52,35 @@ var Flickerer = (function($)
     	'</div><div class="result box">' +
         '<div class="pagination"></div>' +
         '<div class="images"></div>' +
-        '</div>');
+        '<div id="backdrop">Click on the image to close</div></div>');
         var mirror = this;
 
         // draw photo results
         function searchLoadResults(res)
         {
-        	var $res = $queryUI.find('.images').empty(),
-        	item;
+        	$queryUI.find('.images').empty();
         	for (var i=0; i<res.photos.perpage; i++)
         	{
-        		item = res.photos.photo[i];
-        		$res.append($('<img src="http://farm'+item.farm+'.staticflickr.com/'+
-        						item.server+'/'+item.id+'_'+item.secret+'_s.jpg" />'));
+        		renderImageItem(res.photos.photo[i]);
         	}
+        }
+        // render a search result
+        function renderImageItem(item)
+        {
+        	$queryUI.find('.images').append($('<img src="http://farm'+item.farm+'.staticflickr.com/'+item.server+'/'+item.id+'_'+item.secret+'_s.jpg" />')
+        		.click(function()
+				{
+					$queryUI.find('#backdrop').fadeIn();
+					$('<img src="http://farm'+item.farm+'.staticflickr.com/'+item.server+'/'+item.id+'_'+item.secret+'_b.jpg" />')
+						.addClass('fullImg')
+						.appendTo($('body'))
+						.click(function()
+						{
+							$queryUI.find('#backdrop').fadeOut();
+							$(this).remove();
+						});
+				})
+			);
         }
         // determine pagination
         function searchRebuildPagination(res, full)

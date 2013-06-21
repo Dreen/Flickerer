@@ -4,7 +4,6 @@ div {
 
 #flwnd {
     width: 800px;
-    min-height: 600px;
 }
 
 .box {
@@ -64,4 +63,15 @@ div {
 	left: 0px;
 	display:none;
 	color: white;
+}
+
+img {
+	cursor: pointer;
+}
+
+.fullImg {
+	position: absolute;
+	z-index:999;
+	top:20px;
+	left:20px;
 }
