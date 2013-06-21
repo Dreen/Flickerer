@@ -1,3 +1,42 @@
+div {
+    font-family: Arial;
+}
+
+#flwnd {
+    width: 800px;
+    min-height: 600px;
+}
+
+.box {
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+    background-color: #e2efd1;
+    padding:20px;
+    width: 100%;
+}
+
+.query {
+    text-align:left;
+}
+
+.query input {
+    width: 50%;
+}
+
+.result {
+    margin-top: 10px;
+    height: 100%;
+}
+
+.result img {
+    margin: 5px;
+}
+
+.result .pagination {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
 .msgbox {
 	position: absolute;
 	top:5px;
