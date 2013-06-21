@@ -50,26 +50,66 @@ var Flickerer = (function($)
     	'</div><div class="result box">' +
         '<div class="pagination"></div>' +
         '</div>');
+        var mirror = this;
+
+        //// draw photo results
+        function searchLoadResults(res)
+        {
+        	// TODO
+        }
+        // determine pagination
+        function searchRebuildPagination(res, full)
+        {
+        	full = full || false; // TODO
+
+        	var $pages = $queryUI.find('.pagination').empty().append('Page: ');
+			for (var i=0; i<res.photos.pages; i++)
+			{
+				var p = i+1;
+				$pages.append(p);
+				//else
+				//	$pages.append($('<a href="#">'+p+'</a>').click(function()
+				//	{
+				//		runSearch(p);
+				//	}));
+				if (p < res.photos.pages)
+					$pages.append(', ');
+			}
+        }
+        // perform a search
+        function runSearch(page)
+		{
+			mirror.search({
+				'text': $queryUI.find('#query_text').val(),
+				'tags': $queryUI.find('#query_tags').val().split(','),
+				'page': page || 1
+			}, function(res)
+			{
+				console.log(res);
+				searchRebuildPagination(res);
+				searchLoadResults(res);
+			});
+		}
+        // performing search function
 		$queryUI.find('button').click(function()
 		{
-			var query = {
-				'text': $queryUI.find('#query_text').val(),
-				'tags': $queryUI.find('#query_tags').val().split(',')
-			};
-			console.log(query);
+			runSearch();
 		});
+
 		$queryUI.appendTo(this.$el);
 	}
 
 	/*
-	 * Run a search query
+	 * Run a search query and return a json result
 	 */
 	F.prototype.search = function(params, onFinish)
 	{
 		if (typeof params != "object" || Object.keys(params).length === 0)
 			say('Error: Empty search query.');
 		else
+		{
 			this.go('flickr.photos.search', params).call(this, onFinish);
+		}
 	};
 
 	/*
@@ -82,6 +122,7 @@ var Flickerer = (function($)
 		});
 		return function(onFinish)
 		{
+			console.log(data);
 			$.post(baseURL, data, function(ret)
 			{
 				// before using the callback, remove all the meta-data from the response
@@ -97,7 +138,7 @@ var Flickerer = (function($)
 				}
 				else
 				{
-					console.log('%j', ret);
+					console.log(ret);
 					say('Error processing request: ' + ret.message);
 				}
 			});
