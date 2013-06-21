@@ -8,8 +8,7 @@ var Flickerer = (function($)
 		'api_key': apiKey,
 		'nojsoncallback': 1,
 		'method': ''
-	},
-	maxPageLinks = 5;									// only display that many links in pagination before compacting them
+	};
 
 	/*
 	 * Display a message box
@@ -62,35 +61,22 @@ var Flickerer = (function($)
         // determine pagination
         function searchRebuildPagination(res, full)
         {
-        	full = full || false;
+        	full = full || false; // TODO
 
         	var $pages = $queryUI.find('.pagination').empty().append('Page: ');
 			for (var i=0; i<res.photos.pages; i++)
 			{
-				var p = i+1,
-				is_ddd = res.photos.pages > maxPageLinks && p == maxPageLinks - 1 && !full;
-
+				var p = i+1;
 				if (p == mirror.page)
 					$pages.append(p);
 				else
-				{
-					if (is_ddd)
-					{
-						$pages.append($('<a href="#">...</a><span> </span>').click(function()
-						{
-							searchRebuildPagination(res, true);
-						}));
-						i = res.photos.pages - 2;
-					}
-					else
-						$pages.append($('<a href="#">'+p+'</a>').click(getSearchWorker(p, full)));
-				}
-				if (p < res.photos.pages && !is_ddd)
+					$pages.append($('<a href="#">'+p+'</a>').click(getSearchWorker(p)));
+				if (p < res.photos.pages)
 					$pages.append(', ');
 			}
         }
         // return a function which performs a search
-        function getSearchWorker(page, full)
+        function getSearchWorker(page)
 		{
 			page = page || 1;
 			return function()
@@ -102,7 +88,7 @@ var Flickerer = (function($)
 				}, function(res)
 				{
 					mirror.page = page;
-					searchRebuildPagination(res, full);
+					searchRebuildPagination(res);
 					searchLoadResults(res);
 				});
 			};
