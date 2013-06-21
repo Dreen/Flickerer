@@ -46,8 +46,8 @@ var Flickerer = (function($)
 
 		// set up interface
 		var $queryUI = $('<div class="query box">' +
-        '<label>Title:</label><input type="text" id="query_text" /><br />' +
-        '<label>Tags (use comma):</label><input type="text" id="query_tags" /><br />' +
+        '<label>Title: </label><input type="text" id="query_text" /><br />' +
+        '<label>Tags (use comma): </label><input type="text" id="query_tags" /><br />' +
         '<button>Search</button>' +
     	'</div><div class="result box">' +
         '<div class="pagination"></div>' +
@@ -71,7 +71,7 @@ var Flickerer = (function($)
         		.click(function()
 				{
 					$queryUI.find('#backdrop').fadeIn();
-					$('<img src="http://farm'+item.farm+'.staticflickr.com/'+item.server+'/'+item.id+'_'+item.secret+'_b.jpg" />')
+					$('<img src="http://farm'+item.farm+'.staticflickr.com/'+item.server+'/'+item.id+'_'+item.secret+'.jpg" />')
 						.addClass('fullImg')
 						.appendTo($('body'))
 						.click(function()
