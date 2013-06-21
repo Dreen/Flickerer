@@ -33,6 +33,7 @@ var Flickerer = (function($)
 	{
 		rows = rows || 5;
 		columns = columns || 10;
+		this.page = 1;
 
 		if (!el)
 		{
@@ -52,7 +53,7 @@ var Flickerer = (function($)
         '</div>');
         var mirror = this;
 
-        //// draw photo results
+        // draw photo results
         function searchLoadResults(res)
         {
         	// TODO
@@ -66,35 +67,34 @@ var Flickerer = (function($)
 			for (var i=0; i<res.photos.pages; i++)
 			{
 				var p = i+1;
-				$pages.append(p);
-				//else
-				//	$pages.append($('<a href="#">'+p+'</a>').click(function()
-				//	{
-				//		runSearch(p);
-				//	}));
+				if (p == mirror.page)
+					$pages.append(p);
+				else
+					$pages.append($('<a href="#">'+p+'</a>').click(getSearchWorker(p)));
 				if (p < res.photos.pages)
 					$pages.append(', ');
 			}
         }
-        // perform a search
-        function runSearch(page)
+        // return a function which performs a search
+        function getSearchWorker(page)
 		{
-			mirror.search({
-				'text': $queryUI.find('#query_text').val(),
-				'tags': $queryUI.find('#query_tags').val().split(','),
-				'page': page || 1
-			}, function(res)
+			page = page || 1;
+			return function()
 			{
-				console.log(res);
-				searchRebuildPagination(res);
-				searchLoadResults(res);
-			});
+				mirror.search({
+					'text': $queryUI.find('#query_text').val(),
+					'tags': $queryUI.find('#query_tags').val().split(','),
+					'page': page
+				}, function(res)
+				{
+					mirror.page = page;
+					searchRebuildPagination(res);
+					searchLoadResults(res);
+				});
+			};
 		}
         // performing search function
-		$queryUI.find('button').click(function()
-		{
-			runSearch();
-		});
+		$queryUI.find('button').click(getSearchWorker());
 
 		$queryUI.appendTo(this.$el);
 	}
@@ -138,7 +138,7 @@ var Flickerer = (function($)
 				}
 				else
 				{
-					console.log(ret);
+					//console.log(ret);
 					say('Error processing request: ' + ret.message);
 				}
 			});
